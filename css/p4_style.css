@@ -1,0 +1,68 @@
+@import url('https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css');
+
+body{
+    margin: 0;
+    min-width: 1200px;
+}
+
+header {
+    background-color: #cccccc;
+    align: center;
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    min-width: 1200px;
+    height: 135px;
+    z-index: 10;
+}
+
+ul {
+    margin: 50px 80px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.nav {
+    color: black;
+    font-family: 'NanumSquare';
+    font-size: 30px;
+    font-weight: 300;
+    float: right;
+    display: inline-block;
+    margin-left: 50px;
+    user-select: none;
+}
+
+.active {
+    font-weight: 800;
+    text-decoration: none;
+}
+
+#logo{
+    position: absolute;
+    padding-left: 40px;
+    padding-top: 30px;
+    user-select: none;
+}
+
+.unstyled::-webkit-inner-spin-button{
+    display: none;
+    -webkit-appearance: none;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+}
