@@ -702,7 +702,7 @@ function draw() {
 
             break;
     }
-    text(int(map(mouseX,0,width,0,1920)) + "  " + int(map(mouseY,0,width,0,1920)) + "  " + pointerX + "   " + phase, width-500, height-100);
+    //text(int(map(mouseX,0,width,0,1920)) + "  " + int(map(mouseY,0,width,0,1920)) + "  " + pointerX + "   " + phase, width-500, height-100);
 }
 
 function rep(input){
