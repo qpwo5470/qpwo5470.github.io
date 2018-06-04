@@ -11,6 +11,7 @@ var slide = 0;
 var helpNo = 0;
 var help1;
 var help2;
+var help3;
 var helpP;
 
 var logo;
@@ -76,6 +77,8 @@ function windowResized() {
 
 function preload() {
     help1 = loadStrings('p4_help1.txt');
+    help2 = loadStrings('p4_help2.txt');
+    help3 = loadStrings('p4_help3.txt');
 
     logo = loadImage('images/logo2.png');
     arrow = loadImage('images/p4_arrow.png');
@@ -743,15 +746,15 @@ function mousePressed(){
             }
 
             if (rep(1410) < mouseX && mouseX < rep(1670) && 135+rep(162) < mouseY && mouseY < 135+rep(628)) {
-                helpNo = floor(random(0, help1.length));
-                helpP.html(help1[helpNo]);
+                helpNo = floor(random(0, help2.length));
+                helpP.html(help2[helpNo]);
             }
             break;
         case 5:
             if(!taken && rep(1052)<mouseX && mouseX < rep(1230) && rep(400)<mouseY && mouseY<rep(489)){
                 var temp = createGraphics(result.width,result.height);
                 temp.scale(-1,1);
-                temp.image(result,-result.width,0);
+                temp.image(result,-result.width,0, result.width, result.height);
                 imageSaved = temp;
                 noStroke();
                 fill(255);
@@ -766,6 +769,11 @@ function mousePressed(){
                 walk.style("display", "block");
                 walk.position(rep(730), rep(500));
                 walk.size(rep(208), rep(392));
+            }
+
+            if (rep(1410) < mouseX && mouseX < rep(1670) && 135+rep(162) < mouseY && mouseY < 135+rep(628)) {
+                helpNo = floor(random(0, help3.length));
+                helpP.html(help3[helpNo]);
             }
             break;
         case 7:
