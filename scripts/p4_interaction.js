@@ -103,7 +103,9 @@ function setup() {
     helpP = createP(help1[helpNo]);
     helpP.position(rep(1430),135+rep(295));
     helpP.style("font-family", "NanumSquare");
-    helpP.style("font-size", rep(24)+"px");
+    helpP.style('display: table-cell');
+    helpP.style("font-size", rep(22)+"px");
+    helpP.style("vertical-align", "middle");
     helpP.style('font-weight: 300');
     helpP.style("width", rep(230)+"px");
     helpP.style('user-select: none;');
