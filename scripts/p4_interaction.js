@@ -698,7 +698,7 @@ function draw() {
 
             image(helper, rep(1540), rep(530),rep(259),rep(475));
 
-            image(bye, width/2, height/2, windowWidth, rep(944));
+            image(bye, width/2, 135+rep(944/2), windowWidth, rep(944));
 
             break;
     }
