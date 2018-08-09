@@ -1,6 +1,6 @@
 function windowResized() {
     if (windowWidth > 1200) {
-        resizeCanvas(windowWidth, windowWidth / 16 * 9 - 135);
+        resizeCanvas(windowWidth, windowWidth / 16 * 9);
     }
     else {
         resizeCanvas(1200, 675);
@@ -15,8 +15,8 @@ function preload() {
 }
 
 function setup() {
-    canvas = createCanvas(windowWidth-30, windowWidth/16*9-135);
-    canvas.position(0,135);
+    canvas = createCanvas(windowWidth-30, windowWidth/16*9);
+    canvas.position(0,0);
     if (windowWidth < 1200) {
         resizeCanvas(1200, 675);
     }

@@ -8,27 +8,23 @@ var nanumSquareR;
 var phase = 1;
 var slide = 0;
 
-var helpNo = 0;
-var help1;
-var help2;
-var help3;
-var helpP;
-
 var logo;
-var arrow;
-var face;
-var helper;
-var pointer;
+var navigation1;
+var navigation2;
+var navigation3;
+var navigation4;
+var arrowL;
+var arrowR;
+var category;
+var nameBox;
+var textBox;
 var cameraAllInOne;
-var saver;
-var bye;
+var hand;
+var pushh;
 
-var walk;
-
-var pointerX;
-
-var subjects = ["인간관계", "연애", "돈", "일", "음식", "다이어트", "패션뷰티", "덕질", "아무말"];
+var subjects = ["인간관계", "연애", "돈", "일", "음식", "다이어트", "패션뷰티", "덕질", "아무말", "기타"];
 var sub_selected = -1;
+var num;
 
 var nameIn;
 var bdayIn;
@@ -36,6 +32,7 @@ var textIn;
 
 var nameOnce = false;
 var bdayOnce = false;
+
 
 var webcam;
 var buffer;
@@ -55,457 +52,238 @@ var card;
 
 function windowResized() {
     if (windowWidth > 1200) {
-        resizeCanvas(windowWidth, windowWidth / 16 * 9 - 135);
+        resizeCanvas(windowWidth, windowWidth / 16 * 9);
     }
     else {
         resizeCanvas(1200, 675);
-    }
-    helpP.position(rep(1430), 135 + rep(295));
-    helpP.style("width", rep(230) + "px");
-    helpP.style("font-size", rep(24) + "px");
-    if (phase === 3) {
-
-
-        textIn.position(rep(315), 135 + rep(465));
-        textIn.style("font-size", rep(48) + "px");
-        textIn.style("width", rep(965) + "px");
-        textIn.style('line-height', rep(65) + "px");
-        textIn.style("background-image", "repeating-linear-gradient(white, white " + rep(64) + "px, #638c0b " + rep(64) + "px, #638c0b " + rep(65) + "px, white " + rep(65) + "px)");
     }
 }
 
 
 function preload() {
-    help1 = loadStrings('p4_help1.txt');
-    help2 = loadStrings('p4_help2.txt');
-    help3 = loadStrings('p4_help3.txt');
-
     logo = loadImage('images/logo2.png');
-    arrow = loadImage('images/p4_arrow.png');
-    face = loadImage('images/p4_face.png');
-    helper = loadImage('images/p4_helper.png');
-    pointer = loadImage('images/p4_pointer.png');
+    navigation1 = loadImage('images/p4_navigation.png');
+    navigation2 = loadImage('images/p4_navigation2.png');
+    navigation3 = loadImage('images/p4_navigation3.png');
+    navigation4 = loadImage('images/p4_navigation4.png');
+     arrowL = loadImage('images/p4_arrowL.png');
+     arrowR = loadImage('images/p4_arrowR.png');
+     category = loadImage('images/category.png');
+     nameBox = loadImage('images/nameBox.png');
+     textBox = loadImage('images/textBox.png');
     cameraAllInOne = loadImage('images/cameraAllInOne.png');
-    saver = loadImage('images/p4_save.png');
-    bye = loadImage('images/p4_bye.png');
 
     nanumSquareB = loadFont('fonts/NanumSquareB.otf');
     nanumSquareR = loadFont('fonts/NanumSquareR.otf');
 }
 
 function setup() {
-    canvas = createCanvas(windowWidth-30, windowWidth/16*9-135);
-    canvas.position(0,135);
+    canvas = createCanvas(windowWidth, windowWidth/16*9);
+    canvas.position(0,0);
     if (windowWidth < 1200) {
         resizeCanvas(1200, 675);
     }
 
-    helpP = createP(help1[helpNo]);
-    helpP.position(rep(1430),135+rep(295));
-    helpP.style("font-family", "NanumSquare");
-    helpP.style('display: table-cell');
-    helpP.style("font-size", rep(22)+"px");
-    helpP.style("vertical-align", "middle");
-    helpP.style('font-weight: 300');
-    helpP.style("width", rep(230)+"px");
-    helpP.style('user-select: none;');
-    imageMode(CENTER);
 
+    nameIn = createInput('');
+    nameIn.position(rep(474), rep(575));
+    nameIn.style("font-family", "NanumSquare");
+    nameIn.style("font-size", rep(38) + "px");
+    nameIn.style('font-weight: 800');
+    nameIn.style("width", rep(400) + "px");
+    nameIn.style('border-style: none');
+    nameIn.style('text-align: center');
+    nameIn.mousePressed(function () {
+        if (!nameOnce) {
+            this.value('');
+            nameOnce = true;
+        }
+    });
+    nameIn.hide();
+
+    bdayIn = createInput('');
+    bdayIn.addClass("unstyled");
+    bdayIn.id('bday');
+    bdayIn.position(rep(1136), rep(575));
+    bdayIn.style("font-family", "NanumSquare");
+    bdayIn.style("font-size", rep(38) + "px");
+    bdayIn.style('font-weight: 800');
+    bdayIn.style("width", rep(400) + "px");
+    bdayIn.style('border-style: none');
+    bdayIn.style('text-align: center');
+    bdayIn.mousePressed(function () {
+        if (!bdayOnce) {
+            this.value('');
+            this.attribute('type', 'number');
+            this.attribute('maxlength', '4');
+        }
+    });
+    bdayIn.hide();
+
+
+    textIn = createElement('textarea', '');
+    textIn.addClass('textin');
+    textIn.attribute('rows', '4');
+    textIn.attribute('maxlength', '50');
+    textIn.position(rep(297), rep(335));
+    textIn.style("font-family", "NanumSquare");
+    textIn.style("font-size", rep(55) + "px");
+    textIn.style('font-weight: 500');
+    textIn.style("width", rep(1309) + "px");
+    textIn.style('line-height', rep(107) + "px");
+    textIn.style('border: none');
+    textIn.style('resize:none');
+    textIn.style('background-attachment: local');
+    textIn.style("background-image", "repeating-linear-gradient(#ffce00, #ffce00 " + rep(106) + "px, #ffffff " + rep(106) + "px, #ffffff " + rep(107) + "px, #ffce00 " + rep(107) + "px)");
+    textIn.hide();
+
+
+    pushh = createImg('images/push.gif');
+    pushh.position(rep(1228),rep(416));
+    pushh.size(rep(345),rep(296));
+    pushh.hide();
+    hand = createImg('images/hand.png');
+    hand.position(rep(1430),rep(675));
+    hand.size(rep(620),rep(543));
+    hand.hide();
 
     webcam = createCapture();
     webcam.position(rep(400), rep(395));
     webcam.elt.setAttribute('playsinline', '');
     webcam.size(w,h);
     webcam.hide();
-
-
-    helpNo = floor(random(0, help1.length));
-    helpP.html(help1[helpNo]);
-    frameRate(15);
-
-
-    walk = createImg('images/walk.gif');
-    walk.style("display", "none");
 }
 
 function draw() {
     background(255);
-
     switch(phase) {
         case 1:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            pointerX = 364;
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            fill(219);
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareB);
-            text('카테고리 선택',rep(364),rep(190));
-            textFont(nanumSquareR);
-            text('철학 작문', rep(640),rep(190));
-            text('사진찍기', rep(917),rep(190));
-            text('완성', rep(1193),rep(190));
 
-            stroke(0);
-            strokeWeight(1);
-            fill(255);
-            rect(rep(261), rep(260), rep(1063), rep(507));
+            image(navigation1, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
 
-            textSize(rep(33.6));
-            textAlign(LEFT);
-            noStroke();
-            var i;
-            for (i = 0; i < 9; i++) {
-                image(face, rep(430 + 290 * (i % 3)), rep(365 + 150 * floor(i / 3)),rep(76),rep(76));
-                if (i === sub_selected) {
-                    fill(255,206,0);
-                    textFont(nanumSquareB);
-                }
-                else {
-                    fill(100);
-                    textFont(nanumSquareR);
-                }
-                text(subjects[i], rep(500 + 290 * (i % 3)), rep(375 + 150 * floor(i / 3)));
-            }
-
-            strokeWeight(2);
-            stroke(0);
-            fill(255);
-            ellipse(windowWidth / 2, rep(890), rep(89), rep(89));
-            image(arrow, windowWidth / 2, rep(890), rep(89), rep(89));
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
+            image(category, rep(281), rep(314), rep(1358), rep(573));
+            //250, 270  1660, 905
+            var x = int(mouseX / (rep(1660 - 250) / 5)) - 1;
+            var y = int(mouseY / (rep(905 - 270) / 2)) - 1;
+            num = x + y * 5;
 
             break;
 
         case 2:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            fill(219);
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            text('철학 작문', rep(640),rep(190));
-            text('사진찍기', rep(917),rep(190));
-            text('완성', rep(1193),rep(190));
 
+            image(navigation2, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
 
             push();
             translate(rep(slide), 0);
 
-            stroke(0);
-            strokeWeight(1);
-            fill(255);
-            rect(rep(261), rep(260), rep(1063), rep(507));
-
-            textSize(rep(33.6));
-            textAlign(LEFT);
-            noStroke();
-            fill(100);
-            var i;
-            for (i = 0; i < 9; i++) {
-                image(face, rep(430 + 290 * (i % 3)), rep(365 + 150 * floor(i / 3)),rep(76),rep(76));
-                if (i === sub_selected) textFont(nanumSquareB);
-                else textFont(nanumSquareR);
-                text(subjects[i], rep(500 + 290 * (i % 3)), rep(375 + 150 * floor(i / 3)));
-            }
-
-            stroke(0);
-            strokeWeight(1);
-            fill(255);
-            rect(rep(1500+261), rep(504-135), rep(1500+1063), rep(398));
-
-            textFont(nanumSquareR);
-            textSize(rep(24));
-            textAlign(LEFT);
-            noStroke();
-            fill(100);
-            text("주제: "+subjects[sub_selected], rep(1500+308),rep(568-135));
-
-            stroke(219);
-            strokeWeight(1);
-            for(i = 0; i<3; i++){
-                line(rep(1500+315), rep(530+i*65), rep(1500+1280), rep(530+i*65));
-            }
-
-            noStroke();
-            textFont(nanumSquareB);
-            textAlign(RIGHT);
-            text("(0/50)",rep(1500+1280),rep(710));
+            image(category, rep(281), rep(314), rep(1358), rep(573));
+            image(nameBox, rep(303 + 1800), rep(519), rep(1315), rep(142));
             pop();
 
-            noStroke();
-            fill(255);
-            rect(0,0,rep(261), windowHeight);
-            rect(rep(1325),0,windowWidth, windowHeight);
+            var slideS = (-1800 - slide) / 15;
+            slide += min(-5, slideS);
 
-            strokeWeight(2);
-            stroke(0);
-            fill(255);
-            ellipse(windowWidth / 2, rep(890), rep(89), rep(89));
-            image(arrow, windowWidth / 2, rep(890), rep(89), rep(89));
-            pointerX += (640-pointerX)/15;
-            var slideS = (-1500-slide)/15;
-            slide += min(-5,slideS);
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
-
-            if(slide+1500<1){
+            if (slide + 1800 < 1) {
                 phase++;
-                helpP.html('도움이 필요하면<br>날 눌러줘~');
-
-                nameIn = createInput('이름을 써주세요');
-                nameIn.position(rep(266), 135+rep(293));
-                nameIn.style("font-family", "NanumSquare");
-                nameIn.style("font-size", rep(29)+"px");
-                nameIn.style('font-weight: 300');
-                nameIn.style("width", rep(198)+"px");
-                nameIn.style('border-style: none');
-                nameIn.style('border-bottom: 2px solid #dbdbdb');
-                nameIn.style('text-align: center');
-                nameIn.mousePressed(function(){
-                    if(!nameOnce){
-                        this.value('');
-                        nameOnce = true;
-                    }
-                })
-
-                bdayIn = createInput('생년을 써주세요');
-                bdayIn.addClass("unstyled");
-                bdayIn.id('bday');
-                bdayIn.position(rep(514), 135+rep(293));
-                bdayIn.style("font-family", "NanumSquare");
-                bdayIn.style("font-size", rep(29)+"px");
-                bdayIn.style('font-weight: 300');
-                bdayIn.style("width", rep(253)+"px");
-                bdayIn.style('border-style: none');
-                bdayIn.style('border-bottom: 2px solid #dbdbdb');
-                bdayIn.style('text-align: center');
-                bdayIn.mousePressed(function(){
-                    if(!bdayOnce) {
-                        this.value('');
-                        this.attribute('type','number');
-                        this.attribute('maxlength','4');
-                    }
-                });
-                textIn = createElement('textarea', '');
-                textIn.addClass('textin');
-                textIn.attribute('rows','3');
-                textIn.attribute('maxlength','50');
-                textIn.position(rep(315), 135+rep(465));
-                textIn.style("font-family", "NanumSquare");
-                textIn.style("font-size", rep(48)+"px");
-                textIn.style('font-weight: 300');
-                textIn.style("width", rep(965)+"px");
-                textIn.style('line-height', rep(65)+"px");
-                textIn.style('border: none');
-                textIn.style('resize:none');
-                textIn.style('background-attachment: local');
-                textIn.style("background-image", "repeating-linear-gradient(white, white "+rep(64)+"px, #dbdbdb "+rep(64)+"px, #dbdbdb "+rep(65)+"px, white "+rep(65)+"px)");
+                nameIn.show();
+                bdayIn.show();
             }
-
 
 
             break;
 
         case 3:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            pointerX = 640;
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            fill(219);
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            textFont(nanumSquareB);
-            text('철학 작문', rep(640),rep(190));
-            textFont(nanumSquareR);
-            text('사진찍기', rep(917),rep(190));
-            text('완성', rep(1193),rep(190));
 
-            stroke(0);
-            strokeWeight(1);
-            fill(255);
-            rect(rep(261), rep(504-135), rep(1063), rep(398));
+            image(navigation2, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
 
-            textFont(nanumSquareR);
-            textSize(rep(24));
-            textAlign(LEFT);
-            noStroke();
-            fill(100);
-            text("주제: "+subjects[sub_selected], rep(308),rep(568-135));
-
-            textFont(nanumSquareB);
-            textAlign(RIGHT);
-            text("("+textIn.value().length+"/50)",rep(1280),rep(710));
-
-            noStroke();
-            fill(255);
-            rect(0,0,rep(261), windowHeight);
-
-            strokeWeight(2);
-            stroke(0);
-            fill(255);
-            ellipse(windowWidth / 2, rep(890), rep(89), rep(89));
-            image(arrow, windowWidth / 2, rep(890), rep(89), rep(89));
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
-
-
+            image(nameBox, rep(303), rep(519), rep(1315), rep(142));
 
             break;
 
         case 4:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            fill(219);
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25))
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            text('철학 작문', rep(640),rep(190));
-            text('사진찍기', rep(917),rep(190));
-            text('완성', rep(1193),rep(190));
 
+            image(navigation2, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
 
-            push();//pushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpush
-            translate(rep(slide),0);
+            push();
+            translate(rep(slide), 0);
 
-            stroke(0);
-            strokeWeight(1);
-            fill(255);
-            rect(rep(261), rep(504-135), rep(1063), rep(398));
+            image(nameBox, rep(303), rep(519), rep(1315), rep(142));
+            image(textBox, rep(207 + 1800), rep(310), rep(1507), rep(595));
+            pop();
 
-            textFont(nanumSquareR);
-            textSize(rep(24));
-            textAlign(LEFT);
-            noStroke();
-            fill(100);
-            text("주제: "+subjects[sub_selected], rep(315),rep(568-135));
+            var slideS = (-1800 - slide) / 15;
+            slide += min(-5, slideS);
 
-            textFont(nanumSquareB);
-            textAlign(RIGHT);
-            text("("+textIn.value().length+"/50)",rep(1280),rep(710));
-
-            stroke(219);
-            strokeWeight(1);
-            for(i = 0; i<3; i++){
-                line(rep(315), rep(530+i*65), rep(1280), rep(530+i*65));
-            }
-
-            image(cameraAllInOne, rep(1500+780), rep(508), rep(901), rep(216));
-
-            stroke(0);
-            strokeWeight(1);
-            fill(255);
-            rect(rep(1500+400), rep(260), rep(532), rep(507));
-            pop();//poppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppop
-
-            textIn.position(rep(315+slide), 135+rep(410));
-
-            noStroke();
-            fill(255);
-            rect(0,0,rep(261), windowHeight);
-            rect(rep(1325),0,windowWidth, windowHeight);
-
-            noStroke();
-            fill(255);
-            rect(0,0,rep(261), windowHeight);
-
-            strokeWeight(2);
-            stroke(0);
-            fill(255);
-            ellipse(windowWidth / 2, rep(890), rep(89), rep(89));
-            image(arrow, windowWidth / 2, rep(890), rep(89), rep(89));
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
-
-            pointerX += (917-pointerX)/15;
-            var slideS = (-1500-slide)/15;
-            slide += min(-5,slideS);
-
-            if(slide+1500<1){
+            if (slide + 1800 < 1) {
                 phase++;
-                buffer = new jsfeat.matrix_t(w, h, jsfeat.U8C1_t);
-            }
+                textIn.show();
+     }
+
 
             break;
 
         case 5:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            pointerX = 917;
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            fill(219);
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            text('철학 작문', rep(640),rep(190));
-            textFont(nanumSquareB);
-            text('사진찍기', rep(917),rep(190));
-            textFont(nanumSquareR);
-            text('완성', rep(1193),rep(190));
 
-            image(cameraAllInOne, rep(780), rep(508), rep(901), rep(216));
+            image(navigation2, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
+
+            image(textBox, rep(207), rep(310), rep(1507), rep(595));
+
+            textFont(nanumSquareB);
+            textAlign(RIGHT);
+            textSize(rep(36));
+            text(textIn.value().length + "/50자", rep(1616), rep(854));
+
+            break;
+
+        case 6:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            image(navigation3, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
+
+            push();//pushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpush
+            translate(rep(slide), 0);
+
+
+            image(textBox, rep(207), rep(310), rep(1507), rep(595));
+
+            textFont(nanumSquareB);
+            textAlign(RIGHT);
+            textSize(rep(36));
+            text(textIn.value().length + "/50자", rep(1616), rep(854));
+
+            image(cameraAllInOne, rep(1800 + 292), rep(189), rep(1261), rep(799));
+
+            pop();//poppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppop
+
+            textIn.position(rep(297 + slide), rep(335));
+
+            var slideS = (-1800 - slide) / 15;
+            slide += min(-5, slideS);
+
+            if (slide + 1800 < 1) {
+                textIn.hide();
+                phase++;
+                buffer = new jsfeat.matrix_t(w, h, jsfeat.U8C1_t);
+                pushh.show();
+                hand.show();
+            }
+
+            break;
+
+        case 7:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            image(navigation3, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
 
             webcam.loadPixels();
             if (webcam.pixels.length > 0) { // don't forget this!
@@ -523,64 +301,44 @@ function draw() {
                 }
                 result = jsfeatToP5(buffer, result);
                 push();
-                translate(rep(666), rep(513.5));
-                if(taken){
-                    image(imageSaved, 0,0, rep(532), rep(507));
+                if (taken) {
+                    translate(rep(307), rep(251));
+                    image(imageSaved, 0, 0, rep(723), rep(721));
                 }
-                else{
-                    scale(-1,1);
-                    image(result, 0,0, rep(532), rep(507));
+                else {
+                    translate(rep(1030), rep(251));
+                    scale(-1, 1);
+                    image(result, 0, 0, rep(723), rep(721));
                 }
                 pop();
             }
-
-            stroke(0);
-            strokeWeight(1);
-            noFill();
-            rect(rep(400), rep(260), rep(532), rep(507));
-            image(arrow, windowWidth / 2, rep(890), rep(89), rep(89));
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
-
+            image(cameraAllInOne, rep(292), rep(189), rep(1261), rep(799));
 
             break;
 
-        case 6:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        case 8:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            fill(219);
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            text('철학 작문', rep(640),rep(190));
-            text('사진찍기', rep(917),rep(190));
-            text('완성', rep(1193),rep(190));
+            image(navigation4, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(arrowR, rep(1798), rep(564), rep(31), rep(43));
+            push();//pushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpushpush
+            translate(rep(slide), 0);
 
+            image(imageSaved, rep(307), rep(251), rep(723), rep(721));
+            image(cameraAllInOne, rep(292), rep(189), rep(1261), rep(799));
+            image(hand, rep(1430), rep(675), rep(620), rep(543));
 
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
+            pop();//poppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppoppop
 
-            pointerX += (1193-pointerX)/15;
+            var slideS = (-2200 - slide) / 15;
+            slide += min(-5, slideS);
 
-            if(1193-pointerX<1){
+            if (slide + 2200 < 1) {
                 var lineSize = 0;
                 var prevSpace = 0;
                 var entered = textSaved;
                 var prevprevSpace = 0;
-                for(var dd = 0; dd<5; dd++) {
+                for (var dd = 0; dd < 5; dd++) {
                     for (var l = prevSpace; l < entered.length; l++) {
                         var tempo = entered.charAt(l);
                         if (tempo === ' ') {
@@ -609,105 +367,33 @@ function draw() {
                 textSaved = entered;
 
                 card = createGraphics(841, 455);
-                card.image(logo, 40,40,137,76);
+                card.strokeWeight(10);
+                card.rect(0,0,841,455);
+                card.image(logo, 40, 40, 137, 76);
                 card.image(imageSaved, 506, 87, 295, 296);
+                card.strokeWeight(1);
                 card.fill(0);
                 card.textFont(nanumSquareR);
                 card.textSize(25);
                 card.text(nameSaved, 59, 385);
                 card.textSize(21);
-                card.text("AD "+bdaySaved + "~", 220, 384);
+                card.text("AD " + bdaySaved + "~", 220, 384);
                 card.textSize(30);
                 card.textAlign(LEFT, TOP);
                 card.text(textSaved, 59, 165);
-                walk.remove();
-                helpP.html('평범한 철학자가<br>된 것을 축하해~<br>어때 마음에 들어?');
                 phase++;
             }
 
             break;
 
-        case 7:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        case 9:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            pointerX = 1193;
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            text('철학 작문', rep(640),rep(190));
-            text('사진찍기', rep(917),rep(190));
-            textFont(nanumSquareB);
-            text('완성', rep(1193),rep(190));
-
-            strokeWeight(rep(2));
-            stroke(0);
-            fill(255);
-            rect(rep(371), rep(274), rep(841), rep(455));
-            image(card, rep(791), rep(501), rep(841), rep(455));
-
-            image(saver, width/2, rep(858), rep(202), rep(85));
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
-
-            break;
-
-        case 8:////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            pointerX = 1193;
-            image(pointer, rep(pointerX), rep(90), rep(26),rep(40));
-            stroke(219);
-            strokeWeight(4);
-            line(rep(364),rep(136),rep(1193),rep(136));
-            stroke(255, 204, 0);
-            line(rep(364),rep(136),rep(pointerX),rep(136));
-            strokeWeight(1);
-            noStroke();
-            fill(255, 204, 0);
-            ellipse(rep(364),rep(136),rep(27),rep(27));
-            ellipse(rep(640),rep(136),rep(27),rep(27));
-            ellipse(rep(917),rep(136),rep(27),rep(27));
-            textFont(nanumSquareB);
-            ellipse(rep(1193),rep(136),rep(27),rep(27));
-            fill(100);
-            textSize(rep(25));
-            textAlign(CENTER);
-            textFont(nanumSquareR);
-            text('카테고리 선택',rep(364),rep(190));
-            text('철학 작문', rep(640),rep(190));
-            textFont(nanumSquareB);
-            text('사진찍기', rep(917),rep(190));
-            textFont(nanumSquareR);
-            text('완성', rep(1193),rep(190));
-
-            strokeWeight(rep(2));
-            stroke(0);
-            fill(255);
-            rect(rep(371), rep(274), rep(841), rep(455));
-            image(card, rep(791), rep(501), rep(841), rep(455));
-
-            image(saver, width/2, rep(858), rep(202), rep(85));
-
-            image(helper, rep(1540), rep(530),rep(259),rep(475));
-
-            image(bye, width/2, 135+rep(944/2), windowWidth, rep(944));
+            image(navigation4, rep(369), rep(71), rep(1184), rep(58));
+            image(arrowL, rep(91), rep(564), rep(31), rep(43));
+            image(card, rep(533), rep(360), rep(854), rep(460));
 
             break;
     }
-    //text(int(map(mouseX,0,width,0,1920)) + "  " + int(map(mouseY,0,width,0,1920)) + "  " + pointerX + "   " + phase, width-500, height-100);
 }
 
 function rep(input){
@@ -717,93 +403,130 @@ function rep(input){
 function mousePressed(){
     switch(phase) {
         case 1:
-            var i;
-            for (i = 0; i < 9; i++) {
-                if (rep(392 + 290 * (i % 3)) < mouseX && mouseX < rep(672 + 290 * (i % 3)) && rep(327 + 150 * floor(i / 3)) < mouseY && mouseY < rep(427 + 150 * floor(i / 3))) {
-                    sub_selected = i;
-                }
+            if(num>=0 && num<10){
+                sub_selected = num;
             }
 
-            if (sub_selected != -1 && dist(mouseX, mouseY, windowWidth / 2, rep(890)) < rep(80)) {
+            if (sub_selected != -1 && rightArrow(mouseX, mouseY)) {
                 phase = 2;
             }
 
-            if (rep(1410) < mouseX && mouseX < rep(1670) && 135+rep(162) < mouseY && mouseY < 135+rep(628)) {
-                helpNo = floor(random(0, help1.length));
-                helpP.html(help1[helpNo]);
-            }
             break;
         case 3:
-            var i;
-
-            if (nameIn.value().length>0 && bdayIn.value().length>0 && textIn.value().length>0 && dist(mouseX, mouseY, windowWidth / 2, rep(890)) < rep(80)) {
+            if (nameIn.value().length>0 && bdayIn.value().length>0 && rightArrow(mouseX, mouseY)) {
                 phase = 4;
                 slide = 0;
                 nameSaved = nameIn.value();
                 bdaySaved = bdayIn.value();
-                textSaved = textIn.value();
-                nameIn.remove();
-                bdayIn.remove();
-                textIn.remove();
+                nameIn.hide();
+                bdayIn.hide();
             }
-
-            if (rep(1410) < mouseX && mouseX < rep(1670) && 135+rep(162) < mouseY && mouseY < 135+rep(628)) {
-                helpNo = floor(random(0, help2.length));
-                helpP.html(help2[helpNo]);
+            if(leftArrow(mouseX,mouseY)){
+                phase = 1;
+                slide = 0;
+                nameIn.hide();
+                bdayIn.hide();
             }
             break;
         case 5:
-            if(!taken && rep(1052)<mouseX && mouseX < rep(1230) && rep(400)<mouseY && mouseY<rep(489)){
-                var temp = createGraphics(result.width,result.height);
-                temp.scale(-1,1);
-                temp.image(result,-result.width,0, result.width, result.height);
-                imageSaved = temp;
-                noStroke();
-                fill(255);
-                rect(rep(400), rep(260), rep(532), rep(507));
-                taken = true;
+            if (textIn.value().length>0 && rightArrow(mouseX, mouseY)) {
+                phase = 6;
+                slide = 0;
+                textSaved = textIn.value();
             }
-            if(taken && rep(1052)<mouseX && mouseX < rep(1230) && rep(527)<mouseY && mouseY<rep(616)){
-                taken = false;
-            }
-            if (taken && dist(mouseX, mouseY, windowWidth / 2, rep(890)) < rep(80)) {
-                phase++;
-                walk.style("display", "block");
-                walk.position(rep(730), rep(500));
-                walk.size(rep(208), rep(392));
-            }
-
-            if (rep(1410) < mouseX && mouseX < rep(1670) && 135+rep(162) < mouseY && mouseY < 135+rep(628)) {
-                helpNo = floor(random(0, help3.length));
-                helpP.html(help3[helpNo]);
+            if(leftArrow(mouseX,mouseY)){
+                phase = 3;
+                slide = 0;
+                nameIn.show();
+                bdayIn.show();
+                textIn.hide();
             }
             break;
         case 7:
-            if(rep(859)<mouseX && mouseX<rep(1061) && rep(826)<mouseY && mouseY<rep(911)){
+            if (taken && rightArrow(mouseX, mouseY)) {
+                pushh.hide();
+                hand.hide();
+                phase = 8;
+                slide = 0;
+            }
+            if(leftArrow(mouseX,mouseY)){
+                phase = 5;
+                slide = 0;
+                textIn.position(rep(297), rep(335));
+                textIn.show();
+                pushh.hide();
+                hand.hide();
+            }
+            break;
+        case 9:
+            if(leftArrow(mouseX,mouseY)){
+                phase = 7;
+                slide = 0;
+                pushh.show();
+                hand.show();
+            }
+            else {
                 canvas = createCanvas(841, 455);
-                canvas.image(card,0,0);
+                canvas.image(card, 0, 0);
                 canvas.id("theCard");
                 var dataCanvas = document.getElementById('theCard');
                 var dataURL = dataCanvas.toDataURL();
-                canvas = createCanvas(windowWidth-30, windowWidth/16*9-135);
-                canvas.position(0,135);
-                if (windowWidth < 1200) {
-                    resizeCanvas(1200, 675);
-                }
                 $.ajax({
                     type: "POST",
                     url: "saveImage.php",
                     data: {
                         imgBase64: dataURL
                     }
-                }).done(function(o) {
+                }).done(function (o) {
                     console.log('saved');
                     // If you want the file to be visible in the browser
                     // - please modify the callback in javascript. All you
                     // need is to return the url to the file, you just saved
                     // and than put the image in your browser.
                 });
-                phase++;
+                window.open("index.html", "_self");
+                reset();
             }
+                break;
     }
+}
+
+function keyPressed(){
+    if(key == ' '){
+        if(!taken){
+            var temp = createGraphics(result.width,result.height);
+            temp.scale(-1,1);
+            temp.image(result,-result.width,0, result.width, result.height);
+            imageSaved = temp;
+            taken = true;
+        }
+        else if(taken){
+            taken = false;
+        }
+    }
+}
+
+function reset(){
+     phase = 1;
+     slide = 0;
+    sub_selected = -1;
+    nameOnce = false;
+    bdayOnce = false;
+    nameIn.value('');
+    bdayIn.value('');
+    textIn.value('');
+    resizeCanvas(windowWidth, windowWidth/16*9);
+}
+
+function leftArrow( x,  y){
+    if(rep(91)<=x && x<=rep(122) && rep(564)<=y && y<=rep(607)){
+        return true;
+    }
+    else return false;
+}
+function rightArrow( x,  y){
+    if(rep(1798)<=x && x<=rep(1829) && rep(564)<=y && y<=rep(607)){
+        return true;
+    }
+    else return false;
 }

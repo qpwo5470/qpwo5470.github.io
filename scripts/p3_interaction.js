@@ -90,6 +90,8 @@ function draw() {
     image(keys, map(500,0,1920,0,width), map(800,0,1920,0,width),map(keys.width,0,1920,0,width), map(keys.height,0,1920,0,width));
     if(dist(boyX,boyY,1300,270)<but1.height){
         window.location.href = 'Page4.html';
+    }else if(dist(boyX,boyY,1300,500)<but2.height){
+        window.location.href = 'Page5.html';
     }
 }
 
