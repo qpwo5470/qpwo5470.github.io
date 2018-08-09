@@ -90,5 +90,5 @@ function rep(input){
 }
 
 function mousePressed(){
-        //window.location.href = 'Page2.html';
+    window.location.href = 'Page2.html';
 }
