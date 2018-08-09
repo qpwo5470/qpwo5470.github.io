@@ -72,3 +72,9 @@ function keyReleased(){
         pointing = -1;
     }
 }
+
+function mousePressed(){
+    if(mouseX<rep(300) && mouseY<rep(250)){
+        window.open("Page3.html", "_self");
+    }
+}
