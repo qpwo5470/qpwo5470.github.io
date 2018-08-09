@@ -88,9 +88,10 @@ function draw() {
         pop();
     }
     image(keys, map(500,0,1920,0,width), map(800,0,1920,0,width),map(keys.width,0,1920,0,width), map(keys.height,0,1920,0,width));
-    if(dist(boyX,boyY,1300,270)<but1.height){
+    if(dist(boyX,boyY,map(1300,0,1920,0,width),map(270,0,1920,0,width))<map(but1.height,0,1920,0,width)){
         window.location.href = 'Page4.html';
-    }else if(dist(boyX,boyY,1300,500)<but2.height){
+    }
+    if(dist(boyX,boyY,map(1300,0,1920,0,width),map(730,0,1920,0,width))<map(but1.height,0,1920,0,width)){
         window.location.href = 'Page5.html';
     }
 }
