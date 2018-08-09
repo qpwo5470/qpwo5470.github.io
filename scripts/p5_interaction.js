@@ -75,6 +75,6 @@ function keyReleased(){
 
 function mousePressed(){
     if(mouseX<rep(300) && mouseY<rep(250)){
-        window.open("Page3.html", "_self");
+        window.location.href = 'Page3.html';
     }
 }
