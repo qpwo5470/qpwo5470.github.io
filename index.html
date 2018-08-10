@@ -59,5 +59,15 @@
         }
         setInterval(update,1000);
     </script>
+    <filter id="drop-shadow">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+        <feOffset dx="12" dy="12" result="offsetblur"/>
+        <feFlood flood-color="rgba(0,0,0,0.5)"/>
+        <feComposite in2="offsetblur" operator="in"/>
+        <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+    </filter>
 </head>
 </html>

@@ -15,6 +15,9 @@ var woman1;
 var man2;
 var woman2;
 
+var man1_shadow;
+var woman1_shadow;
+
 var manY = -500;
 var womanY = -550;
 
@@ -37,6 +40,22 @@ function setup() {
     arrow.style("display", "block");
     arrow.position(rep(905),rep(780));
     arrow.size(rep(100),rep(150));
+
+    woman1_shadow = createImg('images/index_woman.gif');
+    woman1_shadow.style("display", "block");
+    woman1_shadow.position(rep(509),rep(149));
+    woman1_shadow.size(rep(630),rep(630));
+    woman1_shadow.style('filter', 'brightness(-100%)');
+    woman1_shadow.style('-webkit-filter', 'brightness(-100%)');
+    woman1_shadow.style('opacity', '.1');
+
+    man1_shadow = createImg('images/index_man.gif');
+    man1_shadow.style("display", "block");
+    man1_shadow.position(rep(891),rep(186));
+    man1_shadow.size(rep(525),rep(525));
+    man1_shadow.style('filter', 'brightness(-100%)');
+    man1_shadow.style('-webkit-filter', 'brightness(-100%)');
+    man1_shadow.style('opacity', '.1');
 
     woman1 = createImg('images/index_woman.gif');
     woman1.style("display", "block");
@@ -65,7 +84,9 @@ function draw() {
     image(banner,rep(1783-(pass%1920)),0,rep(1783), rep(59));
     pass+=6;
     man1.position(rep(891),rep(manY));
-    woman1.position(rep(509),rep(womanY))
+    man1_shadow.position(rep(891-12.5),rep(manY-12.5));
+    woman1.position(rep(509),rep(womanY));
+    woman1_shadow.position(rep(509-15),rep(womanY-15))
     manY += manS;
     womanY += womanS;
     if(womanY>180){
