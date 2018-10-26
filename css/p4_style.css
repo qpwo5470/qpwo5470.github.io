@@ -5,7 +5,41 @@ body{
     min-width: 1200px;
 }
 
+@font-face {
+    font-family: 'HGSoftGGothicssi';
+    src: url("/fonts/HGSoftGGothicssi 00g.ttf")  format('truetype'); /* Safari, Android, iOS */
 
+}
+
+@font-face {
+    font-family: 'HGSoftGGothicssi20';
+    src: url("/fonts/HGSoftGGothicssi 20g.ttf")  format('truetype'); /* Safari, Android, iOS */
+
+}
+
+@font-face {
+    font-family: 'HGSoftGGothicssi40';
+    src: url("/fonts/HGSoftGGothicssi 40g.ttf")  format('truetype'); /* Safari, Android, iOS */
+
+}
+
+@font-face {
+    font-family: 'HGSoftGGothicssi60';
+    src: url("/fonts/HGSoftGGothicssi 60g.ttf")  format('truetype'); /* Safari, Android, iOS */
+
+}
+
+@font-face {
+    font-family: 'HGSoftGGothicssi80';
+    src: url("/fonts/HGSoftGGothicssi 80g.ttf")  format('truetype'); /* Safari, Android, iOS */
+
+}
+
+@font-face {
+    font-family: 'HGSoftGGothicssi99';
+    src: url("/fonts/HGSoftGGothicssi 99g.ttf")  format('truetype'); /* Safari, Android, iOS */
+
+ }
 
 .unstyled::-webkit-inner-spin-button{
     display: none;

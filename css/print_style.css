@@ -1,0 +1,14 @@
+#printing, #loadingBack{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+}
+#dot{
+    position: relative;
+    left: 61.46%;
+    margin-top: 41.30%;
+    width: 6.35%;
+    height: 2.86%;
+}

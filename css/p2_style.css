@@ -1,19 +1,12 @@
-body{
-    min-width: 800;
+body {
+    background-color: #ffce00;
+    min-width: 800px;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    top: 0px;
+    position: fixed;
 }
-.all {
-    margin: auto;
-    align: center;
-}
-#boy{
-    margin-top: 200px;
-    margin-left: 15%;
-    width: 60%;
-}
-
-#arrow{
-    margin-bottom: 17%;
-    margin-left: 10%;
-    width: 2%;
-    float: top;
+@font-face {
+    font-family: 'HGSoftGGothicssi';
+    src: url("/fonts/HGSoftGGothicssi 99g.ttf")  format('truetype'); /* Safari, Android, iOS */
 }

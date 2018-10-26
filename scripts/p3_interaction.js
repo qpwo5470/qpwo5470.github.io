@@ -1,11 +1,21 @@
-function windowResized(){
-    if(windowWidth>800) {
-        resizeCanvas(windowWidth-30, windowHeight-30);
+function windowResized() {
+    if (windowWidth > 800) {
+        resizeCanvas(windowWidth, windowHeight);
     }
     else {
         resizeCanvas(800, 450);
     }
 }
+
+var HGSoftGGothicssi00g;
+var HGSoftGGothicssi20g;
+var HGSoftGGothicssi40g;
+var HGSoftGGothicssi60g;
+var HGSoftGGothicssi80g;
+var HGSoftGGothicssi99g;
+
+var canvas;
+var start = false;
 
 var boy;
 var boyX;
@@ -16,114 +26,284 @@ var down = false;
 var right = false;
 var left = false;
 
-var but1;
-var but2;
-var but3;
+var flag;
+var flags = [];
+var flagX = [1077, 1358, 1195];
+var flagY = [-1300, -800, -300];
+var flagEnd = [306, 598, 851];
+var selected = -1;
+var showText = 0;
+var texts = ["내 철학 작성하기", "다른 사람 철학 보기", "랜덤 철학 뽑기"];
 
+var banner;
+var yellowBanner;
+
+var unPressed = true;
+
+var facebackgroundImg;
+var facebackgroundVid;
 var walk;
 
 var keys;
 
 var flip = 1;
 
+var nowStarted;
+
+var stayed = -1;
+
+var showBanner = false;
+
+var footStep;
+var flagFlap;
+
 function preload() {
+    facebackgroundImg = loadImage('images/facebackground.png');
     boy = loadImage('images/p3_boy.png');
-    but1 = loadImage('images/p3_button1.png');
-    but2 = loadImage('images/p3_button2.png');
-    but3 = loadImage('images/p3_button3.png');
+    flag = loadImage('images/flag.png');
     keys = loadImage('images/keys.png');
+    yellowBanner = loadImage('images/yellow_banner.png');
+    footStep = loadSound('sound/footwalk.mp3');
+    flagFlap = loadSound('sound/flag.mp3');
+
+    HGSoftGGothicssi00g = loadFont('fonts/HGSoftGGothicssi 00g.ttf');
+    HGSoftGGothicssi20g = loadFont('fonts/HGSoftGGothicssi 20g.ttf');
+    HGSoftGGothicssi40g = loadFont('fonts/HGSoftGGothicssi 40g.ttf');
+    HGSoftGGothicssi60g = loadFont('fonts/HGSoftGGothicssi 60g.ttf');
+    HGSoftGGothicssi80g = loadFont('fonts/HGSoftGGothicssi 80g.ttf');
+    HGSoftGGothicssi99g = loadFont('fonts/HGSoftGGothicssi 99g.ttf');
 }
 
 function setup() {
-    createCanvas(windowWidth-30, windowHeight-30);
-    if(windowWidth<800) {
+    canvas = createCanvas(windowWidth, windowHeight);
+    canvas.position(rep(0), rep(0));
+    if (windowWidth < 800) {
         resizeCanvas(800, 450);
     }
+    boy = createImg('images/p3_boy.png');
+    boy.position(rep(boyX), rep(boyY));
+    boy.size(rep(172), rep(377));
+    boy.style("z-index", "2");
+    boy.hide();
     walk = createImg('images/walk.gif');
-    walk.style("display", "none");
-    imageMode(CENTER);
-    boyX = 1920*0.25;
-    boyY = 1080*0.4;
-    speed = 5;
+    walk.position(rep(boyX), rep(boyY));
+    walk.size(rep(220), rep(410));
+    walk.style("z-index", "2");
+    walk.hide();
+
+    facebackgroundVid = createVideo(['videos/facebackground.mp4', 'videos/facebackground.webm'], vidLoad);
+    facebackgroundVid.id('facebackground');
+    facebackgroundVid.position(rep(0), rep(0));
+    facebackgroundVid.size(rep(1920), rep(1080));
+    var tempVid = document.getElementById('facebackground');
+    tempVid.onended = function () {
+        document.getElementById('facebackground').style.display = 'none';
+    };
+    boyX = 155;
+    boyY = 557;
+    speed = 8;
     fill(150);
     noStroke();
+    textFont(HGSoftGGothicssi99g);
+    textSize(rep(58));
+
+    for (var i = 0; i < 3; i++) {
+        flags[i] = createImg('images/movingflag.gif');
+        flags[i].position(rep(flagX[i] - 14), rep(flagEnd[i] - 10));
+        flags[i].size(rep(170), rep(190));
+        flags[i].hide();
+    }
+    nowStarted = millis();
+}
+
+function vidLoad() {
+    facebackground.play();
 }
 
 function draw() {
+    if (document.getElementById('facebackground').style.display === 'none') {
+        start = true;
+    }
+
     background(255);
-    image(but1,map(1300,0,1920,0,width), map(270,0,1920,0,width),map(but1.width,0,1920,0,width), map(but1.height,0,1920,0,width));
-    image(but2,map(1300,0,1920,0,width), map(500,0,1920,0,width),map(but2.width,0,1920,0,width), map(but2.height,0,1920,0,width));
-    image(but3,map(1300,0,1920,0,width), map(730,0,1920,0,width),map(but3.width,0,1920,0,width), map(but3.height,0,1920,0,width));
-
-
-    if(keyIsPressed === true){
-        walk.style("display", "block");
-        walk.style("transform", "scaleX("+flip+")");
-        walk.position(map(boyX-130, 0, 1920, 0, width), map(boyY-245, 0, 1920, 0, width));
-        walk.size(map(260, 0, 1920, 0, width), map(490, 0, 1920, 0, width));
-
-        if(left === true){
-            boyX-=map(speed,0,1920,0,width);
-            rect(map(347,0,1920,0,width), map(803,0,1920,0,width),map(94,0,1920,0,width), map(65,0,1920,0,width));
-        }
-        if(right === true){
-            boyX+=map(speed,0,1920,0,width);
-            rect(map(559,0,1920,0,width), map(803,0,1920,0,width),map(94,0,1920,0,width), map(65,0,1920,0,width));
-        }
-        if(up === true){
-            boyY-=map(speed,0,1920,0,width);
-            rect(map(454,0,1920,0,width), map(731,0,1920,0,width),map(93,0,1920,0,width), map(65,0,1920,0,width));
-        }
-        if(down === true){
-            boyY+=map(speed,0,1920,0,width);
-            rect(map(454,0,1920,0,width), map(804,0,1920,0,width),map(93,0,1920,0,width), map(65,0,1920,0,width));
-        }
+    imageMode(CORNER);
+    if (millis() > 1000 + nowStarted) {
+        image(facebackgroundImg, rep(0), rep(0), rep(1920), rep(1080));
     }
-    else {
-        walk.style("display", "none");
-        push();
-        translate(map(boyX, 0, 1920, 0, width), map(boyY, 0, 1920, 0, width));
-        scale(flip,1);
-        image(boy, 0,0, map(boy.width, 0, 1920, 0, width), map(boy.height, 0, 1920, 0, width));
-        pop();
+    if (start) {
+        const fallSpeed = rep(80);
+        selected = -1;
+        for (var i = 0; i < 3; i++) {
+            if (flagY[i] < flagEnd[i]){
+                flagY[i] += fallSpeed;
+                image(flag, rep(flagX[i]), rep(flagY[i]), rep(141), rep(169));
+            }
+            else {
+                if (abs(flagX[i] - boyX) <= 200 && abs(flagY[i] - boyY) <= 100) {
+                    selected = i;
+                    flags[i].show();
+                    if(!flagFlap.isPlaying()) flagFlap.play();
+                    if (stayed === -1) stayed = 0;
+                    noStroke();
+                    fill(0, 148, 206);
+                }
+                else{
+                    flags[i].hide();
+                    image(flag, rep(flagX[i]), rep(flagY[i]), rep(141), rep(169));
+                    strokeWeight(rep(3));
+                    stroke(0, 148, 206);
+                    noFill();
+                }
+                flagY[i] = flagEnd[i];
+                text(texts[i], rep(flagX[i] + 44), rep(flagY[i] + 160));
+                showText++;
+            }
+        }
+        if (selected === -1) stayed = -1;
     }
-    image(keys, map(500,0,1920,0,width), map(800,0,1920,0,width),map(keys.width,0,1920,0,width), map(keys.height,0,1920,0,width));
-    if(dist(boyX,boyY,1300,270)<but1.height){
-        window.location.href = 'Page4.html';
+    if (showText > 48 && showBanner === false) {
+        banner = createImg('images/banner.gif');
+        banner.id('banner');
+        banner.position(rep(0), rep(0));
+        banner.size(rep(1920), rep(186));
+        banner.show();
+        showBanner = true;
+        // setTimeout(function(){
+        //     document.getElementById('banner').style.display = 'none';
+        //     banner = createImg('images/banner.png');
+        //     banner.id('banner');
+        //     banner.position(rep(505),rep(54));
+        //     banner.size(rep(911),rep(95));}, 2500);
     }
-    if(dist(boyX,boyY,1300,730)<but1.height){
-        window.location.href = 'Page5.html';
+    if (showText > 50) {
+        if (unPressed) image(yellowBanner, rep(80), rep(281), rep(369), rep(47));
+        noStroke();
+        fill(0, 148, 206);
+        ellipse(rep(111 + 46), rep(893 + 46), rep(92), rep(92));
+        ellipse(rep(326 + 46), rep(893 + 46), rep(92), rep(92));
+        ellipse(rep(219 + 46), rep(785 + 46), rep(92), rep(92));
+        ellipse(rep(219 + 46), rep(893 + 46), rep(92), rep(92));
+
+        if (left || right || up || down) {
+            unPressed = false;
+            boy.hide();
+            if(!footStep.isLooping()) footStep.loop();
+            walk.show();
+            walk.style("transform", "scaleX(" + flip + ")");
+            walk.position(rep(boyX), rep(boyY - 225));
+
+            if (left === true) {
+                boyX -= rep(speed);
+                fill(255, 206, 0);
+                ellipse(rep(111 + 46), rep(893 + 46), rep(92), rep(92));
+            }
+            if (right === true) {
+                boyX += rep(speed);
+                fill(255, 206, 0);
+                ellipse(rep(326 + 46), rep(893 + 46), rep(92), rep(92));
+            }
+            if (up === true) {
+                boyY -= rep(speed);
+                fill(255, 206, 0);
+                ellipse(rep(219 + 46), rep(785 + 46), rep(92), rep(92));
+            }
+            if (down === true) {
+                boyY += rep(speed);
+                fill(255, 206, 0);
+                ellipse(rep(219 + 46), rep(893 + 46), rep(92), rep(92));
+            }
+        }
+        else {
+            walk.hide();
+            footStep.pause();
+            boy.show();
+            boy.style("transform", "scaleX(" + flip + ")");
+            boy.position(rep(boyX + 24), rep(boyY - 225 + 33));
+        }
+        imageMode(CORNER);
+        image(keys, rep(144), rep(817), rep(242), rep(140));
+        // if(dist(boyX,boyY,1300,270)<but1.height){
+        //     window.location.href = 'Page4.html';
+        // }
+        // if(dist(boyX,boyY,1300,730)<but1.height){
+        //     window.location.href = 'Page5.html';
+        // }
+    }
+
+    if (stayed >= 0) stayed++;
+    if (stayed === 100) {
+        switch (selected) {
+            case 0 :
+                window.location.href = 'Page4.html';
+                break;
+            case 1:
+                window.location.href = 'Page6.html';
+                break;
+            case 2:
+                window.location.href = 'Page5.html';
+                break;
+        }
     }
 }
 
-function keyPressed(){
-    if(keyCode === LEFT_ARROW){
+function mousePressed() {
+    if (dist(rep(111 + 46), rep(893 + 46),mouseX,mouseY)<rep(46)) {
         flip = -1;
         left = true;
     }
-    if(keyCode === RIGHT_ARROW){
+    if (dist(rep(326 + 46), rep(893 + 46),mouseX,mouseY)<rep(46)) {
         flip = 1;
         right = true;
     }
-    if(keyCode === UP_ARROW){
+    if (dist(rep(219 + 46), rep(785 + 46),mouseX,mouseY)<rep(46)) {
         up = true;
     }
-    if(keyCode === DOWN_ARROW){
+    if (dist(rep(219 + 46), rep(893 + 46),mouseX,mouseY)<rep(46)) {
         down = true;
     }
 }
 
-function keyReleased(){
-    if(keyCode === LEFT_ARROW){
+function mouseReleased() {
+    if (left || right || up || down) {
         left = false;
-    }
-    if(keyCode === RIGHT_ARROW){
         right = false;
-    }
-    if(keyCode === UP_ARROW){
         up = false;
-    }
-    if(keyCode === DOWN_ARROW){
         down = false;
     }
+}
+
+function keyPressed() {
+    if (keyCode === LEFT_ARROW) {
+        flip = -1;
+        left = true;
+    }
+    if (keyCode === RIGHT_ARROW) {
+        flip = 1;
+        right = true;
+    }
+    if (keyCode === UP_ARROW) {
+        up = true;
+    }
+    if (keyCode === DOWN_ARROW) {
+        down = true;
+    }
+}
+
+function keyReleased() {
+    if (keyCode === LEFT_ARROW) {
+        left = false;
+    }
+    if (keyCode === RIGHT_ARROW) {
+        right = false;
+    }
+    if (keyCode === UP_ARROW) {
+        up = false;
+    }
+    if (keyCode === DOWN_ARROW) {
+        down = false;
+    }
+}
+
+function rep(input) {
+    return map(input, 0, 1920, 0, width);
 }

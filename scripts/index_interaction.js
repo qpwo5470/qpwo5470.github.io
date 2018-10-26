@@ -1,11 +1,27 @@
 function windowResized() {
     if (windowWidth > 1200) {
         resizeCanvas(windowWidth, windowWidth / 16 * 9);
+        arrow.position(rep(905),rep(780));
+        woman1_shadow.position(rep(509),rep(149));
+        man1_shadow.position(rep(891),rep(186));
+        woman1.position(rep(509),rep(149));
+        man1.position(rep(891),rep(186));
+        man2.position(rep(174),rep(675));
+        woman2.position(rep(1147),rep(675));
+        arrow.size(rep(100),rep(150));
+        woman1_shadow.size(rep(600),rep(600));
+        man1_shadow.size(rep(500),rep(500));
+        woman1.size(rep(600),rep(600));
+        man1.size(rep(500),rep(500));
+        man2.size(rep(600),rep(250));
+        woman2.size(rep(600),rep(250));
     }
     else {
         resizeCanvas(1200, 675);
     }
 }
+
+var canvas;
 
 var backgroundd;
 var banner;
@@ -41,26 +57,20 @@ function setup() {
     arrow.position(rep(905),rep(780));
     arrow.size(rep(100),rep(150));
 
-    woman1_shadow = createImg('images/index_woman.gif');
+    woman1_shadow = createImg('images/index_woman_shadow.png');
     woman1_shadow.style("display", "block");
     woman1_shadow.position(rep(509),rep(149));
-    woman1_shadow.size(rep(630),rep(630));
-    woman1_shadow.style('filter', 'brightness(-100%)');
-    woman1_shadow.style('-webkit-filter', 'brightness(-100%)');
-    woman1_shadow.style('opacity', '.1');
-
-    man1_shadow = createImg('images/index_man.gif');
-    man1_shadow.style("display", "block");
-    man1_shadow.position(rep(891),rep(186));
-    man1_shadow.size(rep(525),rep(525));
-    man1_shadow.style('filter', 'brightness(-100%)');
-    man1_shadow.style('-webkit-filter', 'brightness(-100%)');
-    man1_shadow.style('opacity', '.1');
+    woman1_shadow.size(rep(600),rep(600));
 
     woman1 = createImg('images/index_woman.gif');
     woman1.style("display", "block");
     woman1.position(rep(509),rep(149));
     woman1.size(rep(600),rep(600));
+
+    man1_shadow = createImg('images/index_man_shadow.png');
+    man1_shadow.style("display", "block");
+    man1_shadow.position(rep(891),rep(186));
+    man1_shadow.size(rep(500),rep(500));
 
     man1 = createImg('images/index_man.gif');
     man1.style("display", "block");
@@ -80,13 +90,17 @@ function setup() {
 var pass = 0;
 function draw() {
     image(backgroundd, 0, 0, rep(1920), rep(1080));
-    image(banner,rep(-(pass%1920)),0,rep(1783), rep(59));
-    image(banner,rep(1783-(pass%1920)),0,rep(1783), rep(59));
-    pass+=6;
+    image(banner,rep(-pass),0,rep(1783), rep(59));
+    image(banner,rep(1783-pass),0,rep(1783), rep(59));
+    image(banner,rep(1783*2-pass),0,rep(1783),rep(59));
+    pass+=rep(6);
+    if(pass>=1783) {
+        pass = 0;
+    }
     man1.position(rep(891),rep(manY));
-    man1_shadow.position(rep(891-12.5),rep(manY-12.5));
+    man1_shadow.position(rep(891),rep(manY));
     woman1.position(rep(509),rep(womanY));
-    woman1_shadow.position(rep(509-15),rep(womanY-15))
+    woman1_shadow.position(rep(509),rep(womanY))
     manY += manS;
     womanY += womanS;
     if(womanY>180){

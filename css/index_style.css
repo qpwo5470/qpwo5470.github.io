@@ -1,0 +1,13 @@
+body {
+    background-color: #ffce00;
+    min-width: 800px;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    top: 0px;
+    position: fixed;
+}
+.shadowed {
+    filter: blur(10px) brightness(-100);
+    -webkit-filter: blur(10px) brightness(-100);
+    opacity: .5;
+}
