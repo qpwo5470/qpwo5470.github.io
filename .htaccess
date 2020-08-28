@@ -1,4 +1,0 @@
-PHP_FLAG register_globals ON
-RewriteEngine On 
-RewriteCond %{SERVER_PORT} 80 
-RewriteRule ^(.*)$ https://normalphilosophy.com/ [R,L]
